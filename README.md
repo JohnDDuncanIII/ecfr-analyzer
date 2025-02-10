@@ -1,16 +1,21 @@
 [![ecfr](https://img.youtube.com/vi/uZpB8ZubFzA/0.jpg)](https://www.youtube.com/watch?v=uZpB8ZubFzA)
 
-## Local
+## Development
+### Local
 [http://localhost:3000](http://localhost:3000)
 
-## Prod
+### Prod
 https://ecfr-analyzer-chi.vercel.app/
 
+## Devops
 ### Backend
-https://vercel.com/john-duncans-projects-7bcd2750/ecfr-analyzer/deployments
+Django REST API deployed to https://ecfr-analyzer-production.up.railway.app/ through [Vercel](https://vercel.com/john-duncans-projects-7bcd2750/ecfr-analyzer/deployments)
 
 ### Frontend
-https://railway.com/project/d565c91c-f0ad-4533-bb36-4c6512b3302d/service/4ca43f63-54a8-4ee7-abbc-351a7a0744f7?environmentId=da119aac-596d-4daf-bb27-1480754f0afa
+Next.js/React with TypeScript deployed to https://ecfr-analyzer-chi.vercel.app/ through [Railway](https://railway.com/project/d565c91c-f0ad-4533-bb36-4c6512b3302d/service/4ca43f63-54a8-4ee7-abbc-351a7a0744f7?environmentId=da119aac-596d-4daf-bb27-1480754f0afa)
+
+### Database
+PostgreSQL database through [Supabase](https://supabase.com/dashboard/project/vcvcjszyjpprefmherxt)
 
 ## Getting Started
 ```bash
@@ -74,6 +79,11 @@ $ uv run manage.py update_agencies_wordcounts
 ## Functionality
 http://localhost:3000/word-counts
 
+1. Agency Word Counts: A visualization of word counts across federal agencies, featuring:
+   - Interactive bar chart with horizontal/vertical toggle
+   - Raw data display option
+   - Comprehensive agency hierarchy representation by word count
+
 [components/ecfr/WordCountDisplay.tsx](components/ecfr/WordCountDisplay.tsx)
 
 [components/ecfr/BarChart.tsx](components/ecfr/BarChart.tsx)
@@ -83,6 +93,12 @@ http://localhost:3000/word-counts
 ![Word Counts](./screenshots/word-counts-vertical.png)
 
 http://localhost:3000/agency-titles
+
+2. Agency CFR Titles & Text: An advanced search interface that:
+   - Parses complex CFR references (title/subtitle/chapter/subchapter/part/subpart/section) from source XML
+   - Calculates aggregate word counts for agencies and their subordinate organizations
+   - Displays full text of all related CFR references
+
 [Agency Titles React Component](app/agency-titles/page.tsx)
 
 ![Agency Titles](./screenshots/agency-titles.png)
@@ -90,6 +106,12 @@ http://localhost:3000/agency-titles
 ![Agency Titles Multiple](./screenshots/agency-titles-multiple.png)
 
 http://localhost:3000/title-compare
+
+3. Historical Title Changes: A comparison tool that:
+   - Allows selection of specific titles and date ranges
+   - Fetches and parses XML data directly from the eCFR API
+   - Provides visual diff analysis of regulatory changes of title between selected dates
+
 [Title Compare React Component](app/title-compare/page.tsx)
 
 ![Title Compare](./screenshots/title-compare.png)
