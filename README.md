@@ -94,8 +94,23 @@ http://localhost:3000/title-compare
 
 ![Title Compare](./screenshots/title-compare.png)
 
-### Bugs/issues/caveats
+### Bugs/issues/caveats/notes
 #### https://www.ecfr.gov/api/admin/v1/agencies.json
+
+There are overlapping Title/Chapter cfr_references for the following Agencies:
+- Title 40, Chapter VII is shared by:
+	- Department of Defense
+	- Department of Energy
+- Title 47, Chapter II is shared by:
+	- National Security Council
+	- Office of Science and Technology Policy
+- Title 47, Chapter IV is shared by:
+	- National Telecommunications and Information Administration
+	- National Highway Traffic Safety Administration
+- Title 50, Chapter IV is shared by:
+	- National Oceanic and Atmospheric Administration
+	- United States Fish and Wildlife Service
+
 ```json
 {
 	"name": "National Telecommunications and Information Administration",
