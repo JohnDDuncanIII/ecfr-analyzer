@@ -31,8 +31,8 @@ export default function WordCountDisplay() {
 	if (loading) return <div>Loading...</div>;
 	if (error) return <div>Error: {error}</div>;
 
-	// Transform data for HighCharts format
-	const chartData = wordCounts.map((agency) => [
+	// Transform data for HighCharts format with explicit tuple typing
+	const chartData: [string, number][] = wordCounts.map((agency) => [
 		agency.name,
 		agency.cfr_word_count,
 	]);
