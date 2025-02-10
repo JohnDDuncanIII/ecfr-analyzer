@@ -77,6 +77,9 @@ $ uv run manage.py update_agencies_wordcounts
 [Update Agencies Wordcounts](ecfr-django/regulations/management/commands/update_agencies_wordcounts.py)
 
 ## Functionality
+### Word Counts
+https://ecfr-analyzer-chi.vercel.app/word-counts
+
 http://localhost:3000/word-counts
 
 1. Agency Word Counts: A visualization of word counts across federal agencies, featuring:
@@ -92,6 +95,9 @@ http://localhost:3000/word-counts
 
 ![Word Counts](./screenshots/word-counts-vertical.png)
 
+### Agency Titles & Text
+https://ecfr-analyzer-chi.vercel.app/agency-titles
+
 http://localhost:3000/agency-titles
 
 2. Agency CFR Titles & Text: An advanced search interface that:
@@ -104,6 +110,9 @@ http://localhost:3000/agency-titles
 ![Agency Titles](./screenshots/agency-titles.png)
 
 ![Agency Titles Multiple](./screenshots/agency-titles-multiple.png)
+
+### Title Compare/Diff
+https://ecfr-analyzer-chi.vercel.app/title-compare
 
 http://localhost:3000/title-compare
 
