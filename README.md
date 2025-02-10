@@ -1,5 +1,17 @@
 [![ecfr](https://img.youtube.com/vi/uZpB8ZubFzA/0.jpg)](https://www.youtube.com/watch?v=uZpB8ZubFzA)
 
+## Local
+[http://localhost:3000](http://localhost:3000)
+
+## Prod
+https://ecfr-analyzer-chi.vercel.app/
+
+### Backend
+https://vercel.com/john-duncans-projects-7bcd2750/ecfr-analyzer/deployments
+
+### Frontend
+https://railway.com/project/d565c91c-f0ad-4533-bb36-4c6512b3302d/service/4ca43f63-54a8-4ee7-abbc-351a7a0744f7?environmentId=da119aac-596d-4daf-bb27-1480754f0afa
+
 ## Getting Started
 ```bash
 $ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -148,10 +160,3 @@ I do this work manually in [CFR Text Scraper](ecfr-django/regulations/management
 For example, it's reasonable to assume https://www.ecfr.gov/api/versioner/v1/full/2025-02-06/title-1.xml?chapter=II or https://www.ecfr.gov/api/versioner/v1/full/2025-02-06/title-49.xml?subtitle=A would return the XML for just the chapter, subchapter, or subtitle, but they actually return the entire title's XML.
 
 > Requests can be for entire titles or part level and below. Downloadable XML document is returned for title requests. Processed XML is returned if part, subpart, section, or appendix is requested.
-
-## Deploy
-### Backend
-https://vercel.com/john-duncans-projects-7bcd2750/ecfr-analyzer/deployments
-
-### Frontend
-https://railway.com/project/d565c91c-f0ad-4533-bb36-4c6512b3302d/service/4ca43f63-54a8-4ee7-abbc-351a7a0744f7?environmentId=da119aac-596d-4daf-bb27-1480754f0afa
