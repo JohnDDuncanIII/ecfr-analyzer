@@ -32,7 +32,7 @@ http://localhost:3000/agency-titles
 2. Agency CFR Titles & Text: An advanced search interface that:
 	- Parses complex CFR references (title/subtitle/chapter/subchapter/part/subpart/section) from source XML
 	- Displays full text of all related CFR references
-	- Leverages scraped data to displays agency word counts along with the full text of all related CFR titles
+	- Leverages scraped data to display agency word counts along with the full text of all related CFR titles
 
 [Agency Titles React Component](app/agency-titles/page.tsx)
 
@@ -50,16 +50,15 @@ http://localhost:3000/title-compare
    - Fetches and parses XML data directly from the eCFR API
    - Provides visual diff analysis of regulatory changes of title between selected dates
    - Displays the full text of the CFR title between the selected dates
-   - Directly calls the eCFR API and parses the XML data
 
 [Title Compare React Component](app/title-compare/page.tsx)
 
 ![Title Compare](./screenshots/title-compare.png)
 
 ## Stack
-- Database: PostgreSQL in [Supabase](https://supabase.com/)
+- Database: [PostgreSQL](https://www.postgresql.org/) in [Supabase](https://supabase.com/)
 - Backend: [Django](https://www.djangoproject.com/) REST API
-- Frontend: Next.js/React with TypeScript
+- Frontend: [Next.js](https://nextjs.org/)/React with TypeScript
 - Deployment: [Railway](https://railway.com/) (backend) and [Vercel](https://vercel.com/) (frontend)
 - Dev: [bun](https://bun.sh/) for next.js, [biomejs](https://biomejs.dev/) for frontend linting, [uv](https://github.com/astral-sh/uv) for python/django, [ruff](https://github.com/astral-sh/ruff) for backend linting
 - Visualization: [Highcharts](https://www.highcharts.com/)
