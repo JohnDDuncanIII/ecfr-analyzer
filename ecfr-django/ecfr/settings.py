@@ -27,7 +27,7 @@ if debug:
     ALLOWED_HOSTS.append("localhost")
 else:
     # Replace with your actual API domain
-    ALLOWED_HOSTS.append("your-api-domain.com")
+    ALLOWED_HOSTS.append(os.getenv("NEXT_PUBLIC_API_DOMAIN"))
 
 INSTALLED_APPS = [
     # builtin
