@@ -7,6 +7,14 @@ import { BarChart as BarChartIcon, BarChartHorizontal } from "lucide-react";
 
 // ecfr
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+
+// Add this type definition
+type SeriesData = {
+	name: string;
+	colorByPoint: boolean;
+	data: [string, number][];
+};
+
 interface BarChartProps extends HighchartsReact.Props {
 	data: [string, number][];
 	title: string;
@@ -41,7 +49,7 @@ export default function BarChart({
 					fontFamily: "Verdana, sans-serif",
 				},
 				step: 0,
-				maxStaggerLines: 1000,
+				staggerLines: 1000,
 				rotation: chartType === "column" ? -45 : 0, // Rotate labels for column view
 			},
 		},
@@ -99,11 +107,12 @@ export default function BarChart({
 		},
 		series: [
 			{
+				type: chartType, // or 'column' depending on chartType
 				name: "Word Count",
 				colorByPoint: true,
 				data: data,
-			} as any,
-		],
+			},
+		] as Highcharts.SeriesOptionsType[],
 		credits: {
 			enabled: false,
 		},

@@ -185,6 +185,8 @@ export default function TitleCompare() {
 						<pre
 							ref={preRef1}
 							className="bg-gray-100 p-4 rounded-lg overflow-auto max-h-[600px] text-sm"
+							// @ts-ignore
+							// eslint-disable-next-line react/no-danger
 							dangerouslySetInnerHTML={{ __html: xmlData1 }}
 						/>
 					)}
@@ -219,6 +221,8 @@ export default function TitleCompare() {
 						<pre
 							ref={preRef2}
 							className="bg-gray-100 p-4 rounded-lg overflow-auto max-h-[600px] text-sm"
+							// @ts-ignore
+							// eslint-disable-next-line react/no-danger
 							dangerouslySetInnerHTML={{ __html: xmlData2 }}
 						/>
 					)}
