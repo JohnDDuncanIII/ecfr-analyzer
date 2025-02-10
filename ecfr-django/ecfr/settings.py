@@ -26,8 +26,13 @@ ALLOWED_HOSTS = []
 if debug:
     ALLOWED_HOSTS.append("localhost")
 else:
-    # Replace with your actual API domain
-    ALLOWED_HOSTS.append(os.getenv("NEXT_PUBLIC_API_DOMAIN"))
+    # Railway provides this environment variable
+    ALLOWED_HOSTS.extend(
+        [
+            os.getenv("RAILWAY_DOMAIN", ""),
+            ".railway.app",  # Allow all railway.app subdomains
+        ]
+    )
 
 INSTALLED_APPS = [
     # builtin
@@ -48,6 +53,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     # builtin
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -128,6 +134,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -139,5 +147,5 @@ CORS_ALLOWED_ORIGINS = []
 if debug:
     CORS_ALLOWED_ORIGINS.append("http://localhost:3000")
 else:
-    # Replace with your Vercel domain)
-    CORS_ALLOWED_ORIGINS.append("https://your-frontend-domain.vercel.app")
+    # Your Vercel frontend domain
+    CORS_ALLOWED_ORIGINS.append(os.getenv("VERCEL_DOMAIN"))
