@@ -30,7 +30,7 @@ else:
     ALLOWED_HOSTS.extend(
         [
             os.getenv("RAILWAY_DOMAIN", ""),
-            ".railway.app",  # Allow all railway.app subdomains
+            ".railway.app",
         ]
     )
 
