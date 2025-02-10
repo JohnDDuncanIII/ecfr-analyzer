@@ -1,4 +1,69 @@
+# eCFR Analyzer
+An analytics platform that monitors the Electronic Code of Federal Regulations (eCFR), providing real-time insights into regulatory evolution across federal agencies.
+
 [![ecfr](https://img.youtube.com/vi/uZpB8ZubFzA/0.jpg)](https://www.youtube.com/watch?v=uZpB8ZubFzA)
+
+## Functionality
+### Word Counts
+https://ecfr-analyzer-chi.vercel.app/word-counts
+
+http://localhost:3000/word-counts
+
+1. Agency Word Counts: A visualization of word counts across federal agencies, featuring:
+	- Interactive bar chart with horizontal/vertical toggle
+	- Raw data display option
+	- Calculates aggregate word counts for agencies and their subordinate organizations
+	- Comprehensive agency hierarchy representation by word count
+	- Scrapes agency word counts from the eCFR API versioner endpoint and saves them to the database
+
+[components/ecfr/WordCountDisplay.tsx](components/ecfr/WordCountDisplay.tsx)
+
+[components/ecfr/BarChart.tsx](components/ecfr/BarChart.tsx)
+
+![Word Counts](./screenshots/word-counts-horizontal.png)
+
+![Word Counts](./screenshots/word-counts-vertical.png)
+
+### Agency Titles & Text
+https://ecfr-analyzer-chi.vercel.app/agency-titles
+
+http://localhost:3000/agency-titles
+
+2. Agency CFR Titles & Text: An advanced search interface that:
+	- Parses complex CFR references (title/subtitle/chapter/subchapter/part/subpart/section) from source XML
+	- Displays full text of all related CFR references
+	- Leverages scraped data to displays agency word counts along with the full text of all related CFR titles
+
+[Agency Titles React Component](app/agency-titles/page.tsx)
+
+![Agency Titles](./screenshots/agency-titles.png)
+
+![Agency Titles Multiple](./screenshots/agency-titles-multiple.png)
+
+### Title Compare/Diff
+https://ecfr-analyzer-chi.vercel.app/title-compare
+
+http://localhost:3000/title-compare
+
+3. Historical Title Changes: A comparison tool that:
+   - Allows selection of specific titles and date ranges
+   - Fetches and parses XML data directly from the eCFR API
+   - Provides visual diff analysis of regulatory changes of title between selected dates
+   - Displays the full text of the CFR title between the selected dates
+   - Directly calls the eCFR API and parses the XML data
+
+[Title Compare React Component](app/title-compare/page.tsx)
+
+![Title Compare](./screenshots/title-compare.png)
+
+## Stack
+- Database: PostgreSQL in [Supabase](https://supabase.com/)
+- Backend: [Django](https://www.djangoproject.com/) REST API
+- Frontend: Next.js/React with TypeScript
+- Deployment: [Railway](https://railway.com/) (backend) and [Vercel](https://vercel.com/) (frontend)
+- Dev: [bun](https://bun.sh/) for next.js, [biomejs](https://biomejs.dev/) for frontend linting, [uv](https://github.com/astral-sh/uv) for python/django, [ruff](https://github.com/astral-sh/ruff) for backend linting
+- Visualization: [Highcharts](https://www.highcharts.com/)
+- Features efficient data fetching and caching strategies
 
 ## Development
 ### Local
@@ -9,10 +74,10 @@ https://ecfr-analyzer-chi.vercel.app/
 
 ## Devops
 ### Backend
-Django REST API deployed to https://ecfr-analyzer-production.up.railway.app/api/ through [Vercel](https://vercel.com/john-duncans-projects-7bcd2750/ecfr-analyzer/deployments)
+Django REST API [backend](ecfr-django) deployed to https://ecfr-analyzer-production.up.railway.app/api/ through [Railway](https://railway.com/project/d565c91c-f0ad-4533-bb36-4c6512b3302d/service/4ca43f63-54a8-4ee7-abbc-351a7a0744f7?environmentId=da119aac-596d-4daf-bb27-1480754f0afa)
 
 ### Frontend
-Next.js/React with TypeScript deployed to https://ecfr-analyzer-chi.vercel.app/ through [Railway](https://railway.com/project/d565c91c-f0ad-4533-bb36-4c6512b3302d/service/4ca43f63-54a8-4ee7-abbc-351a7a0744f7?environmentId=da119aac-596d-4daf-bb27-1480754f0afa)
+Next.js/React with TypeScript frontend deployed to https://ecfr-analyzer-chi.vercel.app/ through [Vercel](https://vercel.com/john-duncans-projects-7bcd2750/ecfr-analyzer/deployments)
 
 ### Database
 PostgreSQL database through [Supabase](https://supabase.com/dashboard/project/vcvcjszyjpprefmherxt)
@@ -76,57 +141,8 @@ $ uv run manage.py update_agencies_wordcounts
 
 [Update Agencies Wordcounts](ecfr-django/regulations/management/commands/update_agencies_wordcounts.py)
 
-## Functionality
-### Word Counts
-https://ecfr-analyzer-chi.vercel.app/word-counts
-
-http://localhost:3000/word-counts
-
-1. Agency Word Counts: A visualization of word counts across federal agencies, featuring:
-   - Interactive bar chart with horizontal/vertical toggle
-   - Raw data display option
-   - Calculates aggregate word counts for agencies and their subordinate organizations
-   - Comprehensive agency hierarchy representation by word count
-
-[components/ecfr/WordCountDisplay.tsx](components/ecfr/WordCountDisplay.tsx)
-
-[components/ecfr/BarChart.tsx](components/ecfr/BarChart.tsx)
-
-![Word Counts](./screenshots/word-counts-horizontal.png)
-
-![Word Counts](./screenshots/word-counts-vertical.png)
-
-### Agency Titles & Text
-https://ecfr-analyzer-chi.vercel.app/agency-titles
-
-http://localhost:3000/agency-titles
-
-2. Agency CFR Titles & Text: An advanced search interface that:
-   - Parses complex CFR references (title/subtitle/chapter/subchapter/part/subpart/section) from source XML
-   - Displays full text of all related CFR references
-
-[Agency Titles React Component](app/agency-titles/page.tsx)
-
-![Agency Titles](./screenshots/agency-titles.png)
-
-![Agency Titles Multiple](./screenshots/agency-titles-multiple.png)
-
-### Title Compare/Diff
-https://ecfr-analyzer-chi.vercel.app/title-compare
-
-http://localhost:3000/title-compare
-
-3. Historical Title Changes: A comparison tool that:
-   - Allows selection of specific titles and date ranges
-   - Fetches and parses XML data directly from the eCFR API
-   - Provides visual diff analysis of regulatory changes of title between selected dates
-
-[Title Compare React Component](app/title-compare/page.tsx)
-
-![Title Compare](./screenshots/title-compare.png)
-
-### Bugs/issues/caveats/notes
-#### https://www.ecfr.gov/api/admin/v1/agencies.json
+## Bugs/issues/caveats/notes
+### https://www.ecfr.gov/api/admin/v1/agencies.json
 
 There are overlapping Title/Chapter cfr_references for the following Agencies:
 - Title 40, Chapter VII is shared by:
@@ -194,7 +210,7 @@ In [1]: lst = list(Agency.objects.order_by("short_name").distinct("short_name").
 }
 ```
 
-#### https://www.ecfr.gov/api/versioner/v1/full/{date}/title-{title}.xml
+### https://www.ecfr.gov/api/versioner/v1/full/{date}/title-{title}.xml
 This API endpoint is strange — you would expect it to return truncated XML for queries with a date, title, and subtitle/chapter/subchapter, but even if you include any one of the three aforementionedsubset parameters, the endpoint returns the entire title's XML.
 
 While this is explicitly stated in the API docs, it's not clear to me why the developers decided not to truncate the XML responses if a the subtitle/chapter/subchapter is provided.
