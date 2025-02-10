@@ -1,4 +1,4 @@
-![Functionality](./screenshots/ecfr.mov)
+[![ecfr](https://img.youtube.com/vi/uZpB8ZubFzA/0.jpg)](https://www.youtube.com/watch?v=uZpB8ZubFzA)
 
 ## Getting Started
 ```bash
