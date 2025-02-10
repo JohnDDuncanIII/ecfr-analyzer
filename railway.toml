@@ -1,2 +1,3 @@
 [build]
-root = "ecfr-django" 
+root = "ecfr-django"
+builder = "nixpacks" 
