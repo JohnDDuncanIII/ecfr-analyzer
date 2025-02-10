@@ -1,3 +1,5 @@
+import config from '@/app/config';
+
 export interface Title {
 	number: number;
 	name: string;
@@ -8,7 +10,7 @@ export interface Title {
 }
 
 export async function getTitles(): Promise<Title[]> {
-	const response = await fetch("http://localhost:8000/api/title/");
+	const response = await fetch(`${config.apiBaseUrl}/api/title/`);
 	if (!response.ok) {
 		throw new Error(`Failed to fetch titles: ${response.statusText}`);
 	}

@@ -8,7 +8,7 @@ import {
 	CardDescription,
 	CardContent,
 } from "@/components/ui/card";
-import { BarChart, GitCompare } from "lucide-react";
+import { BarChart, GitCompare, FileText } from "lucide-react";
 
 export default function Home() {
 	return (
@@ -48,7 +48,7 @@ export default function Home() {
 					<Card>
 						<CardHeader>
 							<CardTitle className="flex items-center gap-2">
-								<GitCompare className="h-6 w-6" />
+								<FileText className="h-6 w-6" />
 								Agency CFR Titles & Text
 							</CardTitle>
 							<CardDescription>

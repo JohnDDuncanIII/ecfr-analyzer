@@ -17,20 +17,17 @@ from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(os.path.expanduser("~/.ecfr/.env"))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-k$v)+5fxow^q28ht29@1sk=8(t2sa$a7-u%@i_i#ap3=fo6l^!"
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+debug = os.getenv("DJANGO_DEBUG", "False").lower() == "true"
+DEBUG = debug
 ALLOWED_HOSTS = []
-
-
-# Application definition
+if debug:
+    ALLOWED_HOSTS.append("localhost")
+else:
+    # Replace with your actual API domain
+    ALLOWED_HOSTS.append("your-api-domain.com")
 
 INSTALLED_APPS = [
     # builtin
@@ -83,9 +80,6 @@ WSGI_APPLICATION = "ecfr.wsgi.application"
 
 
 # Database
-
-load_dotenv(os.path.expanduser("~/.ecfr/.env"))
-
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 # https://supabase.com/dashboard/project/vcvcjszyjpprefmherxt/settings/database?showConnect=true
 DATABASES = {
@@ -140,7 +134,10 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# During development
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Your Next.js frontend URL
-]
+# CORS settings
+CORS_ALLOWED_ORIGINS = []
+if debug:
+    CORS_ALLOWED_ORIGINS.append("http://localhost:3000")
+else:
+    # Replace with your Vercel domain)
+    CORS_ALLOWED_ORIGINS.append("https://your-frontend-domain.vercel.app")

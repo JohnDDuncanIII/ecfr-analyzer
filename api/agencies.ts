@@ -1,3 +1,5 @@
+import config from '@/app/config';
+
 export interface Agency {
     name: string;
     slug: string;
@@ -21,7 +23,7 @@ export interface AgencyReferencesResponse {
 }
 
 export async function getAgencyNames(): Promise<Agency[]> {
-    const response = await fetch('http://localhost:8000/api/agency-name/');
+    const response = await fetch(`${config.apiBaseUrl}/api/agency-name/`);
     if (!response.ok) {
         throw new Error('Failed to fetch agency names');
     }
@@ -29,7 +31,7 @@ export async function getAgencyNames(): Promise<Agency[]> {
 }
 
 export async function getAgencyCfrReferences(slug: string): Promise<AgencyReferencesResponse> {
-    const response = await fetch(`http://localhost:8000/api/agency/${encodeURIComponent(slug)}/references/`);
+    const response = await fetch(`${config.apiBaseUrl}/api/agency/${encodeURIComponent(slug)}/references/`);
     if (!response.ok) {
         throw new Error('Failed to fetch CFR references');
     }
