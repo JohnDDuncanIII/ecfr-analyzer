@@ -49,7 +49,6 @@ export default function BarChart({
 					fontFamily: "Verdana, sans-serif",
 				},
 				step: 0,
-				staggerLines: 1000,
 				rotation: chartType === "column" ? -45 : 0, // Rotate labels for column view
 			},
 		},

@@ -18,7 +18,7 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
-debug = os.getenv("DJANGO_DEBUG", "False").lower() == "true"
+debug = os.getenv("DJANGO_DEBUG", "True").lower() == "true"
 DEBUG = debug
 
 if debug:
@@ -28,7 +28,6 @@ ALLOWED_HOSTS = []
 if debug:
     ALLOWED_HOSTS.append("localhost")
 else:
-    # Railway provides this environment variable
     ALLOWED_HOSTS.extend(
         [
             os.getenv("RAILWAY_DOMAIN", ""),
@@ -134,25 +133,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# CORS settings
 CORS_ALLOWED_ORIGINS = []
 if debug:
     CORS_ALLOWED_ORIGINS.append("http://localhost:3000")
 else:
-    # Your Vercel frontend domain
-    CORS_ALLOWED_ORIGINS.extend(
-        [
-            "https://ecfr-analyzer-chi.vercel.app",
-            os.getenv("VERCEL_DOMAIN", ""),
-        ]
-    )
+    CORS_ALLOWED_ORIGINS.append(os.getenv("VERCEL_DOMAIN"))
