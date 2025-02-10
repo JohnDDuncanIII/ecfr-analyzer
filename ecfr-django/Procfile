@@ -1,0 +1,1 @@
+web: uv run python -m gunicorn ecfr.wsgi:application --bind=0.0.0.0:$PORT 
