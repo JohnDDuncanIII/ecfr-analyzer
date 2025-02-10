@@ -150,4 +150,8 @@ For example, it's reasonable to assume https://www.ecfr.gov/api/versioner/v1/ful
 > Requests can be for entire titles or part level and below. Downloadable XML document is returned for title requests. Processed XML is returned if part, subpart, section, or appendix is requested.
 
 ## Deploy
-https://nextjs.org/docs/app/building-your-application/deploying
+### Backend
+https://vercel.com/john-duncans-projects-7bcd2750/ecfr-analyzer/deployments
+
+### Frontend
+https://railway.com/project/d565c91c-f0ad-4533-bb36-4c6512b3302d/service/4ca43f63-54a8-4ee7-abbc-351a7a0744f7?environmentId=da119aac-596d-4daf-bb27-1480754f0afa
