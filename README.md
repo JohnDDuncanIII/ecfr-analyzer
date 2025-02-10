@@ -81,6 +81,11 @@ Next.js/React with TypeScript frontend deployed to https://ecfr-analyzer-chi.ver
 ### Database
 PostgreSQL database through [Supabase](https://supabase.com/dashboard/project/vcvcjszyjpprefmherxt)
 
+#### Schema
+![Schema](./screenshots/schema.png)
+
+[Django Models](ecfr-django/regulations/models.py)
+
 ## Getting Started
 ```bash
 $ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
