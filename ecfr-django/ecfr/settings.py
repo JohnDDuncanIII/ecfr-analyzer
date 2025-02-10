@@ -17,11 +17,13 @@ from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-load_dotenv(os.path.expanduser("~/.ecfr/.env"))
-
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 debug = os.getenv("DJANGO_DEBUG", "False").lower() == "true"
 DEBUG = debug
+
+if debug:
+    load_dotenv(os.path.expanduser("~/.ecfr/.env"))
+
 ALLOWED_HOSTS = []
 if debug:
     ALLOWED_HOSTS.append("localhost")
@@ -148,4 +150,9 @@ if debug:
     CORS_ALLOWED_ORIGINS.append("http://localhost:3000")
 else:
     # Your Vercel frontend domain
-    CORS_ALLOWED_ORIGINS.append(os.getenv("VERCEL_DOMAIN"))
+    CORS_ALLOWED_ORIGINS.extend(
+        [
+            "https://ecfr-analyzer-chi.vercel.app",
+            os.getenv("VERCEL_DOMAIN", ""),
+        ]
+    )
