@@ -9,7 +9,7 @@ https://ecfr-analyzer-chi.vercel.app/
 
 ## Devops
 ### Backend
-Django REST API deployed to https://ecfr-analyzer-production.up.railway.app/ through [Vercel](https://vercel.com/john-duncans-projects-7bcd2750/ecfr-analyzer/deployments)
+Django REST API deployed to https://ecfr-analyzer-production.up.railway.app/api/ through [Vercel](https://vercel.com/john-duncans-projects-7bcd2750/ecfr-analyzer/deployments)
 
 ### Frontend
 Next.js/React with TypeScript deployed to https://ecfr-analyzer-chi.vercel.app/ through [Railway](https://railway.com/project/d565c91c-f0ad-4533-bb36-4c6512b3302d/service/4ca43f63-54a8-4ee7-abbc-351a7a0744f7?environmentId=da119aac-596d-4daf-bb27-1480754f0afa)
@@ -85,6 +85,7 @@ http://localhost:3000/word-counts
 1. Agency Word Counts: A visualization of word counts across federal agencies, featuring:
    - Interactive bar chart with horizontal/vertical toggle
    - Raw data display option
+   - Calculates aggregate word counts for agencies and their subordinate organizations
    - Comprehensive agency hierarchy representation by word count
 
 [components/ecfr/WordCountDisplay.tsx](components/ecfr/WordCountDisplay.tsx)
@@ -102,7 +103,6 @@ http://localhost:3000/agency-titles
 
 2. Agency CFR Titles & Text: An advanced search interface that:
    - Parses complex CFR references (title/subtitle/chapter/subchapter/part/subpart/section) from source XML
-   - Calculates aggregate word counts for agencies and their subordinate organizations
    - Displays full text of all related CFR references
 
 [Agency Titles React Component](app/agency-titles/page.tsx)
