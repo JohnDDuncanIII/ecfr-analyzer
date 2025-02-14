@@ -84,6 +84,7 @@ class Command(BaseCommand):
     def extract_text(self, xml_root, ref, include_headers=True):
         """
         Extracts text content from XML at the most specific/lowest division specified in the reference.
+        Includes hierarchical metadata starting from the requested division.
 
         Args:
             xml_root: XML root element
@@ -91,15 +92,9 @@ class Command(BaseCommand):
             include_headers: Whether to include section headers
         """
 
-        # Define hierarchy from highest to lowest
         # https://github.com/usgpo/bulk-data/blob/main/ECFR-XML-User-Guide.md
         hierarchy = [
-            (
-                "DIV1",
-                "TITLE",
-                "title_id",
-                lambda x: str(x.number),
-            ),  # title is a foreign key
+            ("DIV1", "TITLE", "title_id", lambda x: str(x.number)),
             ("DIV2", "SUBTITLE", "subtitle", str),
             ("DIV3", "CHAPTER", "chapter", str),
             ("DIV4", "SUBCHAP", "subchapter", str),
@@ -111,12 +106,16 @@ class Command(BaseCommand):
         # Find the lowest specified division in our reference
         target_level = None
         target_value = None
+        target_index = 0
 
-        for div_tag, div_type, ref_attr, converter in reversed(hierarchy):
+        for i, (div_tag, div_type, ref_attr, converter) in enumerate(
+            reversed(hierarchy)
+        ):
             ref_value = getattr(ref, ref_attr)
             if ref_value:
                 target_level = (div_tag, div_type)
                 target_value = converter(ref_value)
+                target_index = len(hierarchy) - 1 - i
                 break
 
         if not target_level:
@@ -126,55 +125,53 @@ class Command(BaseCommand):
         in_target_division = False
 
         for elem in xml_root.iter():
-            # Check if we're entering our target division
+            # Check if we've hit the next division at our target level
             if (
                 elem.tag == target_level[0]
                 and elem.get("TYPE") == target_level[1]
                 and elem.get("N")
-                and elem.get("N").strip() == target_value.strip()
             ):
-                in_target_division = True
+                if elem.get("N").strip() == target_value.strip():
+                    in_target_division = True
+                    # Add the division header
+                    head = elem.find("HEAD")
+                    if head is not None and head.text:
+                        text_parts.append(f"\n{head.text.strip()}\n")
+                elif in_target_division:
+                    # We've hit the next division at our level, stop processing
+                    break
 
-                # Add division header if requested
-                if include_headers and elem.find("HEAD") is not None:
-                    head_text = elem.find("HEAD").text.strip()
-                    if target_level[1] == "SECTION":
-                        text_parts.append(f"\n§ {elem.get('N')} {head_text}\n")
-                    else:
-                        text_parts.append(
-                            f"\n{target_level[1]} {elem.get('N')}—{head_text}\n"
-                        )
+            # Process other divisions only if we're in our target division
+            elif in_target_division and elem.tag.startswith("DIV") and elem.get("TYPE"):
+                div_index = next(
+                    (i for i, h in enumerate(hierarchy) if h[0] == elem.tag), -1
+                )
+                if div_index > target_index:  # Only process lower-level divisions
+                    head = elem.find("HEAD")
+                    if head is not None and head.text:
+                        text_parts.append(f"\n{head.text.strip()}\n")
 
-                continue
-
-            # Check if we're exiting our target division (by finding next division of same type)
-            if (
-                in_target_division
-                and elem.tag == target_level[0]
-                and elem.get("TYPE") == target_level[1]
-            ):
-                break
-
-            # Process content within our target division
             if in_target_division:
-                if elem.tag == "P":
+                if elem.tag == "AUTH" and elem.find("PSPACE") is not None:
+                    pspace = elem.find("PSPACE")
+                    if pspace.text:
+                        text_parts.append("\nAuthority: " + pspace.text.strip() + "\n")
+
+                elif elem.tag == "SOURCE" and elem.find("PSPACE") is not None:
+                    pspace = elem.find("PSPACE")
+                    if pspace.text:
+                        text_parts.append("\nSource: " + pspace.text.strip() + "\n")
+
+                elif elem.tag == "P":
                     text = "".join(elem.itertext()).strip()
                     if text:
                         text_parts.append(text + "\n")
 
-                elif elem.tag == "AUTH":
-                    pspace = elem.find("PSPACE")
-                    if elem.find("PSPACE") is not None and pspace.text:
-                        text_parts.append(
-                            "\nAuthority: " + elem.find("PSPACE").text.strip() + "\n"
-                        )
-
-                elif elem.tag == "SOURCE":
-                    pspace = elem.find("PSPACE")
-                    if elem.find("PSPACE") is not None and pspace.text:
-                        text_parts.append(
-                            "\nSource: " + elem.find("PSPACE").text.strip() + "\n"
-                        )
+                elif elem.tag == "CITA":
+                    if elem.get("TYPE") == "N":
+                        cita_text = "".join(elem.itertext()).strip()
+                        if cita_text:
+                            text_parts.append(f"\n{cita_text}\n")
 
         return "".join(text_parts).strip()
 
@@ -182,10 +179,9 @@ class Command(BaseCommand):
         date = options["date"]
         base_url = f"https://www.ecfr.gov/api/versioner/v1/full/{date}"
 
-        # Get queryset of references
         references = CFRReference.objects.all()
         if options["title"]:
-            references.filter(title__number=options["title"])
+            references = references.filter(title__number=options["title"])
 
         xml_cache = None
 
