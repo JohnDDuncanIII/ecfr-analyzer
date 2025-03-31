@@ -1,0 +1,19 @@
+// https://www.sublimetext.com/docs/3/projects.html
+// only dotfiles
+// https://dotfiles.github.io/
+{
+	"folders":
+	[
+		{
+			"path": "~/ecfr-analyzer",
+			"folder_exclude_patterns": [
+				"node_modules/",
+				"ecfr-django/.venv/",
+				"ecfr-django/EPA/",
+				"ecfr-django/TREAS/",
+				".next",
+			],
+			"file_exclude_patterns": []
+		}
+	]
+}

@@ -48,3 +48,9 @@ next-env.d.ts
 **/__pycache__/
 *.py[cod]
 *$py.class
+
+# Sublime Text
+ecfr-analyzer.sublime-workspace
+
+# tmp files
+ecfr-django/tmp

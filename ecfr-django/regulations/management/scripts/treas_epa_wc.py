@@ -1,7 +1,8 @@
 import os
 import re
 
-# from https://www.ecfr.gov/api/admin/v1/agencies.json
+# computes total wordcount from two of the largest agencies
+# and dumps all of the truncated agency title subset(s) to a folder of the agency short_name
 for agency in Agency.objects.filter(short_name__in=["TREAS", "EPA"]):
     cfr_refs = CFRReference.objects.filter(agency=agency)
 
@@ -34,6 +35,7 @@ for agency in Agency.objects.filter(short_name__in=["TREAS", "EPA"]):
             "\n",
         )
 
+# these numbers differ from https://doge.gov/regulations
 # Output:
 # Department of Treasury
 # Title 2 - Federal Financial Assistance, Chapter X  213 (Department of Treasury)

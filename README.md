@@ -30,8 +30,8 @@ https://ecfr-analyzer-chi.vercel.app/agency-titles
 http://localhost:3000/agency-titles
 
 2. Agency CFR Titles & Text: An advanced search interface that:
-	- Parses complex CFR references (title/subtitle/chapter/subchapter/part/subpart/section) from source XML
-	- Displays full text of all related CFR references
+	- Parses complex CFR references (title/subtitle/chapter/subchapter/part/subpart/section) from source XML and matches them to agency regulations
+	- Displays mapped truncated subset text of all related CFR references
 	- Leverages scraped data to display agency word counts along with the full text of all related CFR titles
 
 [Agency Titles React Component](app/agency-titles/page.tsx)
@@ -60,7 +60,11 @@ http://localhost:3000/title-compare
 - Backend: [Django](https://www.djangoproject.com/) REST API
 - Frontend: [Next.js](https://nextjs.org/)/React with TypeScript
 - Deployment: [Railway](https://railway.com/) (backend) and [Vercel](https://vercel.com/) (frontend)
-- Dev: [bun](https://bun.sh/) for next.js, [biomejs](https://biomejs.dev/) for frontend linting, [uv](https://github.com/astral-sh/uv) for python/django, [ruff](https://github.com/astral-sh/ruff) for backend linting
+- Dev:
+    - [bun](https://bun.sh/) for Next.js/React (https://bun.sh/guides/ecosystem/nextjs)
+    - [biomejs](https://biomejs.dev/) for frontend linting
+    - [uv](https://github.com/astral-sh/uv) for Python/Django (https://blog.pecar.me/uv-with-django)
+    - [ruff](https://github.com/astral-sh/ruff) for backend linting
 - Visualization: [Highcharts](https://www.highcharts.com/)
 - Features efficient data fetching and caching strategies
 
@@ -75,8 +79,12 @@ https://ecfr-analyzer-chi.vercel.app/
 ### Backend
 Django REST API [backend](ecfr-django) deployed to https://ecfr-analyzer-production.up.railway.app/api/ through [Railway](https://railway.com/project/d565c91c-f0ad-4533-bb36-4c6512b3302d/service/4ca43f63-54a8-4ee7-abbc-351a7a0744f7?environmentId=da119aac-596d-4daf-bb27-1480754f0afa)
 
+https://github.com/railwayapp-templates/django/tree/main
+
 ### Frontend
 Next.js/React with TypeScript frontend deployed to https://ecfr-analyzer-chi.vercel.app/ through [Vercel](https://vercel.com/john-duncans-projects-7bcd2750/ecfr-analyzer/deployments)
+
+https://nextjs.org/docs/app/api-reference/cli/create-next-app
 
 ### Database
 PostgreSQL database through [Supabase](https://supabase.com/dashboard/project/vcvcjszyjpprefmherxt)
@@ -223,6 +231,12 @@ I do this work manually in [CFR Text Scraper](ecfr-django/regulations/management
 
 ![Extract Text](./screenshots/extract-text.png)
 
-For example, it's reasonable to assume https://www.ecfr.gov/api/versioner/v1/full/2025-02-06/title-1.xml?chapter=II or https://www.ecfr.gov/api/versioner/v1/full/2025-02-06/title-49.xml?subtitle=A would return the XML for just the chapter, subchapter, or subtitle, but they actually return the entire title's XML.
+For example, it's reasonable to assume https://www.ecfr.gov/api/versioner/v1/full/2025-02-06/title-1.xml?chapter=II or https://www.ecfr.gov/api/versioner/v1/full/2025-02-06/title-49.xml?subtitle=A would return the XML for just the chapter, subchapter, or subtitle, but it actually returns the entire title's full XML.
 
 > Requests can be for entire titles or part level and below. Downloadable XML document is returned for title requests. Processed XML is returned if part, subpart, section, or appendix is requested.
+
+## Sources
+[Code of Federal Regulations (ECFR)](https://www.ecfr.gov/developers/documentation/api/v1) (Used to scrape 2024 data and to display 2010-2023 historical data through `/api/versioner/v1/full/{date}/title-{title}.xml` endpoint in [Title Compare](https://ecfr-analyzer-chi.vercel.app/title-compare) feature)
+[https://www.ecfr.gov/api/admin/v1/agencies.json](https://www.ecfr.gov/api/admin/v1/agencies.json)
+[Federal Register](https://www.federalregister.gov/)
+[Code of Federal Regulations (CFR)](https://www.govinfo.gov/bulkdata/CFR) (Unused, bulk 2010-2023 data)
